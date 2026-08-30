@@ -1,14 +1,20 @@
 # AgentBench
 
-### Evaluate. Compare. Improve.
+<div align="center">
+  <img src="frontend/public/logo.png" alt="AgentBench Logo" width="140" />
+  <h3>Evaluate. Compare. Improve.</h3>
+  <p><strong>A provider-agnostic evaluation and benchmarking platform for AI coding agents.</strong></p>
+</div>
 
-> **AgentBench** is an open-source, provider-agnostic evaluation and benchmarking platform for AI coding agents. Run agents against real software-engineering tasks in isolated environments, execute real test suites, collect execution telemetry and metrics, perform objective scoring & failure analysis, and compare performance across models and agents.
+---
+
+> **AgentBench** is a provider-agnostic evaluation and benchmarking platform for AI coding agents. Run agents against real software-engineering tasks in isolated environments, execute real test suites, collect execution telemetry and metrics, perform objective scoring & failure analysis, and compare performance across models and agents.
 
 ---
 
 ## Highlights
 
-* **Free & Local-First by Default**: Works out-of-the-box with **Ollama** and local open-source models (`qwen2.5-coder`, `deepseek-coder-v2`, `llama3.1`). **₹0 / $0 API cost**.
+* **Free & Local-First by Default**: Works out-of-the-box with **Ollama** and local models (`qwen2.5-coder`, `deepseek-coder-v2`, `llama3.1`). **₹0 / $0 API cost**.
 * **Provider-Agnostic**: Pluggable architecture supporting local Ollama, OpenAI (`gpt-4o`, `gpt-4o-mini`), Anthropic (`claude-3-5-sonnet`), Google Gemini (`gemini-1.5-pro`), and custom OpenAI-compatible endpoints.
 * **Dual Sandboxing Layer**: Isolated Docker containers or local process sandboxing with strict path traversal prevention, process tree timeouts, and host secret isolation.
 * **10 Original Benchmark Tasks**: Real software-engineering repositories covering Bug Fixing, Feature Implementation, Refactoring, Debugging, and Security Patches with real `pytest` suites.
@@ -64,18 +70,19 @@
 
 ## Quickstart
 
-### 1. Clone & Install Backend
+### 1. Clone & Install Dependencies
 
 ```bash
-git clone https://github.com/agentbench/agentbench.git
-cd agentbench
-pip install -r backend/requirements.txt
+git clone https://github.com/Kaap10/Agent-Bench.git
+cd Agent-Bench
+pip install -r requirements.txt
 ```
 
 ### 2. (Optional) Run Free Local Model via Ollama
 
 ```bash
-ollama pull qwen2.5-coder
+ollama serve
+ollama pull qwen2.5-coder:1.5b
 ```
 
 ### 3. Check System Health
@@ -90,8 +97,8 @@ Output:
 │ AGENTBENCH ENVIRONMENT DOCTOR │
 └───────────────────────────────┘
 [OK] Python 3.12.x
-[OK] Docker Daemon active
-[OK] Ollama service connected (qwen2.5-coder)
+[OK] Docker Daemon active (or Local Process Fallback)
+[OK] Ollama service connected (qwen2.5-coder:1.5b)
 [OK] SQLite persistence ready (sqlite:///./agentbench.db)
 ```
 
@@ -99,7 +106,7 @@ Output:
 
 ```bash
 # Run with local Ollama
-python agentbench.py run --benchmark fix-auth-jwt --model qwen2.5-coder
+python agentbench.py run --benchmark fix-rate-limiter --provider ollama --model qwen2.5-coder:1.5b
 
 # Or run with fast mock provider for testing
 python agentbench.py run --benchmark fix-sql-builder --provider mock --model mock-coder
@@ -178,7 +185,7 @@ ollama serve
 # 2. Check local models
 ollama list
 
-# 3. Health check
+# 3. Environment diagnostic check
 python agentbench.py doctor
 
 # 4. Run benchmark with real local Ollama model
@@ -231,4 +238,4 @@ python -m pytest -v
 
 ## License
 
-MIT License. Free for open-source and commercial use.
+MIT License. Free for commercial and personal use.
