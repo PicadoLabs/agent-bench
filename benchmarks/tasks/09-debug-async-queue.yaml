@@ -1,0 +1,33 @@
+id: debug-async-queue
+name: Debug Dead Worker Heartbeat & Task Requeue
+description: Fix heartbeat elapsed timeout check, worker unassignment, and max retry threshold handling in TaskQueue.
+category: Debugging
+difficulty: Medium
+
+repository:
+  type: local
+  path: benchmarks/repos/async-task-queue
+  commit: HEAD
+
+task:
+  prompt: |
+    In `task_queue.py`, `TaskQueue.check_dead_workers_and_requeue()` has critical bugs:
+    1. The comparison `elapsed < self.heartbeat_timeout` is inverted, incorrectly triggering on healthy workers and ignoring dead workers.
+    2. When requeueing a dead worker's task to "PENDING", it fails to clear `task.assigned_worker = None`.
+    3. When `task.retry_count >= self.max_retries`, the task must be marked as "FAILED" and not requeued.
+
+    Fix `task_queue.py` so that all test cases in `test_task_queue.py` pass.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_task_queue.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

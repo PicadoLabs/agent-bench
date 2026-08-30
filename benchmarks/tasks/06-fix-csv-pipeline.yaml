@@ -1,0 +1,34 @@
+id: fix-csv-pipeline
+name: Fix Data Pipeline Ingestion & Cleaners
+description: Fix date parsing filter, negative amount validation, and zero division error in DataPipeline.
+category: Bug Fixing
+difficulty: Medium
+
+repository:
+  type: local
+  path: benchmarks/repos/csv-data-pipeline
+  commit: HEAD
+
+task:
+  prompt: |
+    In `pipeline.py`, `DataPipeline.process_records` has several bugs:
+    1. If `records` is empty, computing `average_amount` causes a `ZeroDivisionError`. It should safely return `0.0`.
+    2. Records with missing or invalid `date` values must be skipped (omitted from `records` list and revenue sum).
+    3. If any record contains a negative `amount`, a `ValueError` must be raised.
+    4. Valid date strings matching `YYYY-MM-DD` or `DD/MM/YYYY` must be standardized into `YYYY-MM-DD`.
+
+    Modify `pipeline.py` to fix these errors and pass `pytest test_pipeline.py`.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_pipeline.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

@@ -1,0 +1,38 @@
+id: fix-rate-limiter
+name: Fix Sliding Window Rate Limiter Logic
+description: Fix timestamp filtering, limit check, and rejected request tracking in SlidingWindowRateLimiter.
+category: Bug Fixing
+difficulty: Easy
+
+repository:
+  type: local
+  path: benchmarks/repos/rate-limiter-redis
+  commit: HEAD
+
+task:
+  prompt: |
+    In `rate_limiter.py`, the `is_allowed` method in `SlidingWindowRateLimiter` has logic errors:
+    1. It uses an inverted condition when filtering out old timestamps (`t < cutoff` instead of `t >= cutoff` or `t > cutoff`).
+    2. It appends the current timestamp unconditionally, even when the request is rejected due to rate limits.
+    3. It returns True when the limit is exceeded.
+
+    Fix `is_allowed` so that:
+    - Only timestamps within `[now - window_seconds, now]` are kept.
+    - If `len(valid_timestamps) < self.max_requests`, the current timestamp is recorded and True is returned.
+    - If the limit is reached, the timestamp is NOT recorded, and False is returned.
+
+    Verify your changes by running `pytest test_rate_limiter.py`.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_rate_limiter.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

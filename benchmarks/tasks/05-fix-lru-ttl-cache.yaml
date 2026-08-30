@@ -1,0 +1,33 @@
+id: fix-lru-ttl-cache
+name: Fix LRU Cache with TTL Expiration
+description: Fix TTL expiration condition, MRU ordering update on access, and LRU eviction order in LRUTTLCache.
+category: Bug Fixing
+difficulty: Medium
+
+repository:
+  type: local
+  path: benchmarks/repos/cache-lru-ttl
+  commit: HEAD
+
+task:
+  prompt: |
+    In `lru_ttl_cache.py`, `LRUTTLCache` has several critical bugs:
+    1. In `get()`, the check `if not entry.is_expired(now):` is inverted, deleting valid non-expired entries and leaving expired entries.
+    2. In `get()`, successful access does not update the access order (`self.cache.move_to_end(key)`).
+    3. In `set()`, capacity overflow eviction calls `self.cache.popitem(last=True)`, which evicts the most recently added item rather than the least recently used (`last=False`).
+
+    Fix `LRUTTLCache` in `lru_ttl_cache.py` so that all test cases in `test_cache.py` pass.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_cache.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

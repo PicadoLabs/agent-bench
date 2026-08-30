@@ -1,0 +1,35 @@
+id: feat-config-loader
+name: Implement Typed Config Loader & Env Overrides
+description: Implement environment variable overriding with proper integer and boolean type casting in ConfigLoader.
+category: Feature Implementation
+difficulty: Easy
+
+repository:
+  type: local
+  path: benchmarks/repos/config-loader-yaml
+  commit: HEAD
+
+task:
+  prompt: |
+    In `config_loader.py`, `ConfigLoader.load_from_dict_and_env` reads environment variable strings directly into config fields without type conversion, causing `port` to become a string and `debug` to not correctly parse "true", "1", "false", "0".
+
+    Update `ConfigLoader.load_from_dict_and_env` so that:
+    1. If `APP_PORT` is set, parse it into an integer.
+    2. If `APP_DEBUG` is set, parse "true", "1", "yes" (case-insensitive) as `True`, and "false", "0", "no" as `False`.
+    3. String fields (`host`, `db_url`) retain their string values.
+
+    Run `pytest test_config_loader.py` to verify your solution.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_config_loader.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

@@ -1,0 +1,36 @@
+id: feat-fastapi-pagination
+name: Implement API Paginator & Page Bounds
+description: Complete the Paginator logic with bounds validation, correct total_pages on empty data, and has_previous/has_next flags.
+category: Feature Implementation
+difficulty: Easy
+
+repository:
+  type: local
+  path: benchmarks/repos/fastapi-pagination
+  commit: HEAD
+
+task:
+  prompt: |
+    In `pagination.py`, the `Paginator.paginate` implementation is incomplete and buggy:
+    1. It lacks input validation: `page` must be >= 1 (raise ValueError), and `page_size` must be between 1 and 100 inclusive (raise ValueError).
+    2. When items list is empty, `total_pages` should equal 1, not 0.
+    3. `total_pages` computation fails when total_items is not an exact multiple of page_size (needs ceiling division: `(total_items + page_size - 1) // page_size`).
+    4. `has_previous` should only be True when `page > 1`.
+    5. `has_next` should be True when `page < total_pages`.
+
+    Fix `pagination.py` to satisfy all test cases in `test_pagination.py`. Do not modify test files.
+
+  constraints: |
+    - Use Pydantic and standard python.
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_pagination.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

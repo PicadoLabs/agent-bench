@@ -1,0 +1,35 @@
+id: fix-sql-builder
+name: Implement Parameterized SQL Builder
+description: Fix SQL query builder to prevent SQL injection by using ? placeholders and collecting bound parameters.
+category: Bug Fixing
+difficulty: Easy
+
+repository:
+  type: local
+  path: benchmarks/repos/sql-query-builder
+  commit: HEAD
+
+task:
+  prompt: |
+    In `query_builder.py`, `QueryBuilder.build()` is formatting raw WHERE condition values directly into the query string instead of parameter placeholders (`?`). This creates SQL injection vulnerabilities and breaks bound parameter passing.
+
+    Update `QueryBuilder.build()` so that:
+    - Each WHERE condition renders as `f"{col} {op} ?"` in the SQL string.
+    - Each condition's `value` is collected in order into the `params` list returned as the second element of the tuple.
+    - If no WHERE conditions are present, `params` should be an empty list `[]`.
+
+    Run `pytest test_query_builder.py` to confirm your solution.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_query_builder.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

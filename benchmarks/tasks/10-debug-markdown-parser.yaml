@@ -1,0 +1,35 @@
+id: debug-markdown-parser
+name: Extract Markdown Links & Image Tokens
+description: Extract markdown links and images into typed AST token objects, ignoring malformed/empty targets.
+category: Debugging
+difficulty: Easy
+
+repository:
+  type: local
+  path: benchmarks/repos/markdown-parser
+  commit: HEAD
+
+task:
+  prompt: |
+    In `markdown_parser.py`, `MarkdownLinkExtractor.extract_links()` extracts links `[text](url)` and images `![alt](url)`.
+    
+    Ensure that:
+    1. Images (`![alt](url)`) return `{"type": "image", "alt": label, "url": url}`.
+    2. Regular hyperlinks (`[text](url)`) return `{"type": "link", "text": label, "url": url}`.
+    3. Empty URLs (e.g. `[text]()`) or unclosed bracket syntax are skipped and not included in the output.
+
+    Run `pytest test_markdown.py` to confirm all tests pass.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_markdown.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5

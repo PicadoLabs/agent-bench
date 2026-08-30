@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  agentbench:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PROVIDER=ollama
+      - MODEL_NAME=qwen2.5-coder
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - DATABASE_URL=sqlite:///./agentbench.db
+      - SANDBOX_RUNTIME=local
+    volumes:
+      - ./agentbench.db:/app/agentbench.db
+      - ./benchmarks:/app/benchmarks
+      - ./sandbox_workspaces:/app/sandbox_workspaces
+    restart: unless-stopped
+

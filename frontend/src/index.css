@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-primary-text font-sans antialiased;
+    color-scheme: dark;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(255, 90, 31, 0.07) 0%, transparent 60%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 48px 48px, 48px 48px;
+    background-position: top center, center center, center center;
+    background-repeat: no-repeat, repeat, repeat;
+    background-attachment: fixed;
+  }
+
+  /* Custom subtle dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #252525;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+  }
+}
+
+@layer utilities {
+  .orange-glow {
+    box-shadow: 0 0 40px -10px rgba(255, 90, 31, 0.25);
+  }
+  .orange-glow-sm {
+    box-shadow: 0 0 20px -5px rgba(255, 90, 31, 0.2);
+  }
+  .text-glow-orange {
+    text-shadow: 0 0 24px rgba(255, 90, 31, 0.35);
+  }
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}

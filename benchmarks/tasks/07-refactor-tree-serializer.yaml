@@ -1,0 +1,35 @@
+id: refactor-tree-serializer
+name: Refactor Tree Serializer with Cycle Detection
+description: Refactor recursive tree traversal to detect cycles and eliminate infinite loop hazards.
+category: Refactoring
+difficulty: Medium
+
+repository:
+  type: local
+  path: benchmarks/repos/tree-serializer
+  commit: HEAD
+
+task:
+  prompt: |
+    In `serializer.py`, the `TreeSerializer.flatten_tree` method fails when encountering cyclic or duplicate graph paths.
+    
+    Refactor `flatten_tree` to:
+    1. Maintain a recursion path set to detect cycles. If an ancestor node in the current traversal path is encountered again, raise `ValueError("Cycle detected in tree")`.
+    2. Maintain a global `visited` set to avoid repeating nodes that have already been flattened.
+    3. Return a list of dictionary representations: `{"id": node.id, "value": node.value, "children_ids": [c.id for c in node.children]}`.
+
+    Run `pytest test_serializer.py` to verify your changes.
+
+  constraints: |
+    - Do not modify test files.
+
+evaluation:
+  command: pytest test_serializer.py
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5
