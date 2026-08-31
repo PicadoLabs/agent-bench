@@ -204,7 +204,7 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Accuracy vs Cost Scatter */}
+        {/* Quality vs API Cost & Efficiency */}
         <div className="bg-surface-card p-6 rounded-card border border-border">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -215,8 +215,8 @@ export const Dashboard: React.FC = () => {
                 Score vs dollar expenditure
               </p>
             </div>
-            <span className="text-xs font-mono text-primary-text bg-surface px-2.5 py-0.5 rounded border border-border font-bold">
-              Efficiency
+            <span className="text-xs font-mono text-brand-orange bg-brand-orange/10 px-2.5 py-0.5 rounded border border-brand-orange/20 font-bold">
+              {scatterCostScore.every(d => d.x === 0) ? 'Local-First ($0.00)' : 'Cost Efficiency'}
             </span>
           </div>
 
@@ -227,13 +227,26 @@ export const Dashboard: React.FC = () => {
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <ScatterChart margin={{ top: 10, right: 20, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#1c1c1c" />
-                  <XAxis type="number" dataKey="x" name="Cost" unit="$" stroke="#555" tick={{ fill: '#777', fontSize: 11 }} />
+                  <XAxis
+                    type="number"
+                    dataKey="x"
+                    name="Cost"
+                    unit="$"
+                    stroke="#555"
+                    domain={[0, (dataMax: number) => (dataMax === 0 ? 0.05 : Math.max(dataMax * 1.2, 0.05))]}
+                    tickFormatter={(val: number) => `$${val.toFixed(2)}`}
+                    tick={{ fill: '#777', fontSize: 11 }}
+                  />
                   <YAxis type="number" dataKey="y" name="Score" domain={[0, 100]} stroke="#555" tick={{ fill: '#777', fontSize: 11 }} />
                   <Tooltip
                     cursor={{ strokeDasharray: '3 3' }}
-                    contentStyle={{ backgroundColor: '#0D0D0D', borderColor: '#252525', borderRadius: '8px', color: '#fff' }}
+                    contentStyle={{ backgroundColor: '#0D0D0D', borderColor: '#252525', borderRadius: '8px', color: '#fff', fontSize: '11px', fontFamily: 'monospace' }}
+                    formatter={(value: any, name: string) => [
+                      name === 'Cost' ? `$${Number(value).toFixed(4)}` : `${value}/100`,
+                      name
+                    ]}
                   />
                   <Scatter data={scatterCostScore} fill="#FF5A1F" />
                 </ScatterChart>
