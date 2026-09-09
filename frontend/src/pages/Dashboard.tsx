@@ -5,7 +5,6 @@ import { RunItem, Benchmark, LeaderboardEntry } from '../types';
 import { MetricCard } from '../components/MetricCard';
 import { StatusBadge } from '../components/StatusBadge';
 import { CyberMascot } from '../components/CyberMascot';
-import logoImg from '../assets/logo.png';
 import { formatTime, formatScore } from '../lib/utils';
 import {
   Play,
@@ -16,7 +15,8 @@ import {
   TrendingUp,
   ArrowRight,
   Zap,
-  Terminal as TermIcon
+  Terminal as TermIcon,
+  Code2
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -87,11 +87,9 @@ export const Dashboard: React.FC = () => {
           {/* Left Column: Hero Text & Actions (7 Cols) */}
           <div className="lg:col-span-7 space-y-6">
             <div className="flex items-center gap-3">
-              <img
-                src={logoImg}
-                alt="AgentBench"
-                className="w-10 h-10 rounded-lg object-contain shadow-md border border-border bg-surface p-1"
-              />
+              <div className="w-10 h-10 rounded-lg bg-surface border border-border flex items-center justify-center text-brand-orange shadow-md p-1">
+                <Code2 className="w-5 h-5" />
+              </div>
               <div className="inline-flex items-center text-xs font-mono">
                 <span className="text-primary-text font-bold tracking-widest uppercase">BENCHMARK. EVALUATE. IMPROVE.</span>
               </div>

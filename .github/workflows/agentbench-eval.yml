@@ -1,0 +1,44 @@
+name: AgentBench PR Evaluation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  benchmark-evaluation:
+    name: Evaluate Benchmark Tasks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Initialize AgentBench DB
+        run: python agentbench.py init
+
+      - name: Run Smoke Benchmark (FastAPI Pagination)
+        run: python agentbench.py run --benchmark feat-fastapi-pagination --provider mock --model mock-coder
+
+      - name: Run Smoke Benchmark (Express Auth Middleware)
+        run: python agentbench.py run --benchmark feat-express-auth --provider mock --model mock-coder
+
+      - name: Display Leaderboard Results
+        run: python agentbench.py leaderboard
+

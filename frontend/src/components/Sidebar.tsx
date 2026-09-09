@@ -1,17 +1,17 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import logoImg from '../assets/logo.png';
 import {
   LayoutDashboard,
   Layers,
-  PlayCircle,
-  Activity,
+  Play,
+  History,
   Trophy,
   AlertTriangle,
-  Bot,
+  Cpu,
+  GitCompare,
   Stethoscope,
   PlusCircle,
-  GitCompare
+  Code2
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -22,31 +22,26 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
   const navSections = [
     {
-      title: 'OVERVIEW',
+      title: 'CORE PLATFORM',
       items: [
         { label: 'Dashboard', path: '/', icon: LayoutDashboard },
         { label: 'Benchmarks', path: '/benchmarks', icon: Layers },
-        { label: 'New Benchmark', path: '/benchmarks/create', icon: PlusCircle },
+        { label: 'Create Benchmark', path: '/benchmarks/create', icon: PlusCircle },
+        { label: 'Run Benchmark', path: '/run', icon: Play },
+        { label: 'Runs History', path: '/runs', icon: History },
       ],
     },
     {
-      title: 'EXECUTION',
-      items: [
-        { label: 'Run Benchmark', path: '/run', icon: PlayCircle },
-        { label: 'Runs History', path: '/runs', icon: Activity },
-        { label: 'Agents & Models', path: '/agents-models', icon: Bot },
-      ],
-    },
-    {
-      title: 'ANALYSIS',
+      title: 'ANALYTICS & INSIGHTS',
       items: [
         { label: 'Leaderboard', path: '/leaderboard', icon: Trophy },
         { label: 'Failure Analysis', path: '/failures', icon: AlertTriangle },
+        { label: 'Agents & Models', path: '/agents-models', icon: Cpu },
         { label: 'Compare Runs', path: '/compare', icon: GitCompare },
       ],
     },
     {
-      title: 'SYSTEM',
+      title: 'SYSTEM & DIAGNOSTICS',
       items: [
         { label: 'Environment Doctor', path: '/doctor', icon: Stethoscope },
       ],
@@ -60,14 +55,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
       }`}
     >
       <div>
-        {/* Brand Logo & Tagline */}
+        {/* Brand Header */}
         <div className="p-5 border-b border-border">
           <Link to="/" className="flex items-center gap-3 group">
-            <img
-              src={logoImg}
-              alt="AgentBench Logo"
-              className="w-10 h-10 rounded-lg object-contain shadow-sm group-hover:scale-105 transition-transform"
-            />
+            <div className="w-10 h-10 rounded-lg bg-surface-secondary border border-border flex items-center justify-center text-brand-orange group-hover:border-brand-orange/40 transition-colors shadow-sm">
+              <Code2 className="w-5 h-5" />
+            </div>
             <div>
               <div className="font-extrabold tracking-wider text-primary-text text-sm leading-none font-mono">
                 AGENTBENCH
@@ -122,8 +115,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
             <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
             v1.0.0 (Local-First)
           </span>
-          <span className="text-[10px] bg-border px-1.5 py-0.5 rounded text-primary-secondary">
-            OSS
+          <span className="text-[10px] bg-border px-1.5 py-0.5 rounded text-primary-secondary font-mono">
+            PicadoLabs
           </span>
         </div>
       </div>

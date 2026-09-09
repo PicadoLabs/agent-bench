@@ -46,17 +46,20 @@ frontend/.dist/
 .coverage
 htmlcov/
 
-# IDE
+# IDE & OS
 .idea/
 .vscode/
 *.swp
 *.swo
+.DS_Store
+Thumbs.db
 
 # AgentBench runtime artifacts
 runs/
 sandbox_workspaces/
 
-# Project interview and prompt documentation
+# Project interview and local prompt documentation
 prompt.md
 project.md
 docs/project.md
+docs/agent_bench_project.md
