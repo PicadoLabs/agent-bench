@@ -65,7 +65,7 @@ export const LiveExecution: React.FC = () => {
         setRun(runData);
 
         if (runData.events && runData.events.length > 0) {
-          const eventMsgs = runData.events.map((e) => `${e.event_type.toUpperCase()} ➔ ${e.message}`);
+          const eventMsgs = runData.events.map((e: any) => `${e.event_type.toUpperCase()} ➔ ${e.message}`);
           setLogs((prev) => (eventMsgs.length > prev.length ? eventMsgs : prev));
         }
 
