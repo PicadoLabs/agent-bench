@@ -89,43 +89,41 @@ class LocalSandbox(BaseSandbox):
         if cmd_to_run.startswith("pytest"):
             cmd_to_run = f"python -m {cmd_to_run}"
 
-        # Run process asynchronously in the workspace cwd
+        # Run process synchronously in thread pool to support all event loop implementations on Windows/POSIX
         try:
-            process = await asyncio.create_subprocess_shell(
-                cmd_to_run,
-                cwd=str(self.root_path),
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                env=safe_env
+            def _sync_run():
+                return subprocess.run(
+                    cmd_to_run,
+                    cwd=str(self.root_path),
+                    shell=True,
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    env=safe_env,
+                    timeout=timeout
+                )
+
+            res = await asyncio.to_thread(_sync_run)
+            duration = time.time() - start_t
+            return CommandResult(
+                command=command,
+                exit_code=res.returncode,
+                stdout=res.stdout,
+                stderr=res.stderr,
+                duration_seconds=round(duration, 2),
+                timed_out=False
             )
-            
-            try:
-                stdout_bytes, stderr_bytes = await asyncio.wait_for(process.communicate(), timeout=timeout)
-                duration = time.time() - start_t
-                return CommandResult(
-                    command=command,
-                    exit_code=process.returncode if process.returncode is not None else 1,
-                    stdout=stdout_bytes.decode("utf-8", errors="replace"),
-                    stderr=stderr_bytes.decode("utf-8", errors="replace"),
-                    duration_seconds=round(duration, 2),
-                    timed_out=False
-                )
-            except asyncio.TimeoutError:
-                # Terminate process tree
-                try:
-                    process.kill()
-                    await process.wait()
-                except Exception:
-                    pass
-                duration = time.time() - start_t
-                return CommandResult(
-                    command=command,
-                    exit_code=-1,
-                    stdout="",
-                    stderr=f"Command execution timed out after {timeout} seconds.",
-                    duration_seconds=round(duration, 2),
-                    timed_out=True
-                )
+        except subprocess.TimeoutExpired:
+            duration = time.time() - start_t
+            return CommandResult(
+                command=command,
+                exit_code=-1,
+                stdout="",
+                stderr=f"Command execution timed out after {timeout} seconds.",
+                duration_seconds=round(duration, 2),
+                timed_out=True
+            )
         except Exception as e:
             duration = time.time() - start_t
             return CommandResult(

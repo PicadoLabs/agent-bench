@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-green)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Organization](https://img.shields.io/badge/Maintained%20by-PicadoLabs-FF5A1F)](https://picadolabs.me)
 
 > **AgentBench** is a provider-agnostic, local-first evaluation and benchmarking platform for autonomous AI coding agents. Run agents against real software-engineering tasks in isolated execution sandboxes, execute automated test suites, collect execution telemetry, perform objective multi-dimensional scoring, and analyze failure root causes.
@@ -333,7 +333,7 @@ Agent-Bench/
 ├── CONTRIBUTING.md           # Contributor guide and development workflow
 ├── CODE_OF_CONDUCT.md        # Contributor Covenant Code of Conduct
 ├── SECURITY.md               # Security vulnerability disclosure policy
-└── LICENSE                   # MIT License
+└── LICENSE                   # Apache License 2.0
 ```
 
 ---
@@ -363,6 +363,6 @@ If you discover a security vulnerability, please review our [SECURITY.md](SECURI
 ---
 
 ## License
-
-AgentBench is licensed under the [MIT License](LICENSE).  
+ 
+AgentBench is licensed under the [Apache License, Version 2.0](LICENSE).  
 Copyright (c) 2026 PicadoLabs.

@@ -1,0 +1,36 @@
+id: fix-react-hook-leak
+name: Fix React Custom Hook Event & Timer Memory Leak
+description: Resolve unhandled event subscriptions and un-cleared setInterval polling timers upon unmount.
+category: Bug Fixing
+difficulty: Medium
+
+repository:
+  type: local
+  path: benchmarks/repos/react-hook-leak
+  commit: HEAD
+
+task:
+  prompt: |
+    In subscriptionHook.js, `useDataSubscription(emitter, channel, pollIntervalMs)` has memory leak bugs:
+    1. It registers an event listener `emitter.on(channel, handler)` but fails to remove it via `emitter.removeListener(channel, handler)` or `emitter.off(channel, handler)` in the cleanup function.
+    2. It starts a periodic `setInterval` timer for polling but fails to call `clearInterval(timerId)` when unmounted.
+    3. Multiple subscription calls accumulate dangling listeners and active timers.
+
+    Fix `useDataSubscription` to return a proper cleanup/unsubscribe function that cleans up both the emitter listener and the timer.
+    Do not modify test_hook.js.
+
+  constraints: |
+    - Do not modify test files.
+    - Export useDataSubscription using module.exports.
+
+evaluation:
+  command: node --test test_hook.js
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5
+

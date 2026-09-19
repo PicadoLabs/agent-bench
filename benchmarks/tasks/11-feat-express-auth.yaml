@@ -1,0 +1,43 @@
+id: feat-express-auth
+name: Implement Express API Auth & Token-Bucket Rate Limiter
+description: Implement Bearer token authorization and in-memory token-bucket rate limiting middleware in Node.js.
+category: Feature Implementation
+difficulty: Medium
+
+repository:
+  type: local
+  path: benchmarks/repos/express-auth-middleware
+  commit: HEAD
+
+task:
+  prompt: |
+    In authMiddleware.js, implement two Express middleware functions:
+    1. `authenticateToken(secretKey)`:
+       - Extracts 'Bearer <token>' from the 'authorization' request header.
+       - If header is missing or format is invalid, returns HTTP 401 with JSON { error: 'Unauthorized: Missing or malformed token' }.
+       - If token is not equal to secretKey, returns HTTP 403 with JSON { error: 'Forbidden: Invalid token' }.
+       - If valid, sets req.user = { authenticated: true } and calls next().
+
+    2. `createRateLimiter(maxTokens, refillRatePerSec)`:
+       - In-memory token bucket rate limiter keyed by client IP (`req.ip` or `req.headers['x-forwarded-for']` or '127.0.0.1').
+       - Refills tokens based on elapsed time since last request up to maxTokens.
+       - Consumes 1 token per request. If tokens < 1, returns HTTP 429 with JSON { error: 'Too Many Requests' } and header 'Retry-After'.
+       - Otherwise calls next().
+
+    Do not modify test_auth.js.
+
+  constraints: |
+    - Do not modify test files.
+    - Export authenticateToken and createRateLimiter using module.exports.
+
+evaluation:
+  command: node --test test_auth.js
+  timeout: 60
+
+scoring:
+  correctness: 50
+  test_pass_rate: 25
+  code_quality: 10
+  efficiency: 10
+  reliability: 5
+
