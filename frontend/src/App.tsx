@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
+import { CommandPalette } from './components/CommandPalette';
 import { Dashboard } from './pages/Dashboard';
 import { Benchmarks } from './pages/Benchmarks';
 import { CreateBenchmark } from './pages/CreateBenchmark';
@@ -21,10 +22,8 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-background text-primary-text flex">
-        {/* Sidebar */}
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        {/* Backdrop for mobile */}
         {sidebarOpen && (
           <div
             onClick={() => setSidebarOpen(false)}
@@ -32,10 +31,9 @@ export const App: React.FC = () => {
           />
         )}
 
-        {/* Main Content Area */}
         <div className="flex-1 lg:pl-64 flex flex-col min-w-0">
           <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-          
+
           <main className="flex-1 p-6 lg:p-10 max-w-7xl w-full mx-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
@@ -53,6 +51,8 @@ export const App: React.FC = () => {
             </Routes>
           </main>
         </div>
+
+        <CommandPalette />
       </div>
     </BrowserRouter>
   );
