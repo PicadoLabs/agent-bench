@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Play, Menu, Stethoscope, ArrowRight, Search } from 'lucide-react';
 
@@ -8,13 +8,6 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleOpenPalette = () => window.dispatchEvent(new CustomEvent('agentbench:open-command-palette'));
-    const button = document.getElementById('agentbench-command-trigger');
-    button?.addEventListener('click', handleOpenPalette);
-    return () => button?.removeEventListener('click', handleOpenPalette);
-  }, []);
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-surface/90 backdrop-blur-md border-b border-border px-6 flex items-center justify-between">
@@ -30,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         <button
           id="agentbench-command-trigger"
           type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent('agentbench:open-command-palette'))}
           aria-label="Open command palette"
           className="hidden sm:flex items-center gap-3 w-72 px-3 py-2 bg-surface-secondary hover:bg-surface-tertiary border border-border rounded-lg text-primary-muted transition-colors text-left"
         >
