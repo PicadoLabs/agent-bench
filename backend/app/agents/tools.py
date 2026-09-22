@@ -1,6 +1,6 @@
 import time
 import re
-from typing import Dict, Any, List, Optional, Callable, Awaitable
+from typing import Dict, Any, List, Optional
 from pydantic import BaseModel
 from app.providers.base import ToolDefinition
 from app.sandbox.base import BaseSandbox

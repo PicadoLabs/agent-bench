@@ -1,11 +1,9 @@
-import asyncio
-from typing import List, Dict, Any, Optional
+from typing import Dict, Any, Optional
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.storage.database import get_db, SessionLocal
-from app.storage.models import RunModel
 from app.storage.repository import RunRepository
 from app.benchmarks.runner import BenchmarkRunner
 from app.api.websocket import ws_manager

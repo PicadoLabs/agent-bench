@@ -1,4 +1,3 @@
-import pytest
 from lru_ttl_cache import LRUTTLCache
 
 

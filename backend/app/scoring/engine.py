@@ -54,7 +54,7 @@ class ScoringEngine:
 
         # 3. Code Quality (0.0 to 1.0)
         # Based on diff presence, minimal line changes, and optional AI judge rating
-        diff_lines = len([l for l in git_diff.splitlines() if l.startswith("+") or l.startswith("-")]) if git_diff else 0
+        diff_lines = len([line for line in git_diff.splitlines() if line.startswith("+") or line.startswith("-")]) if git_diff else 0
         if ai_judge_quality is not None:
             quality_ratio = min(1.0, max(0.0, ai_judge_quality / 10.0))
         elif diff_lines > 0 and diff_lines < 150:

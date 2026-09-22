@@ -1,6 +1,6 @@
 # markdown_parser.py - Markdown Link & Image AST Extractor
 import re
-from typing import List, Dict, Any
+from typing import List, Dict
 
 
 class MarkdownLinkExtractor:

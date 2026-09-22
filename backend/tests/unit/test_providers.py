@@ -1,6 +1,5 @@
 import pytest
 from app.providers.mock_provider import MockProvider
-from app.providers.factory import get_provider
 from app.providers.base import LLMMessage
 
 

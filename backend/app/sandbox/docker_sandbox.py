@@ -2,9 +2,9 @@ import os
 import time
 import asyncio
 from pathlib import Path
-from typing import Dict, Any, Optional, List
+from typing import Dict, Optional, List
 import docker
-from docker.errors import DockerException, NotFound
+from docker.errors import NotFound
 from app.sandbox.base import BaseSandbox, CommandResult
 
 
@@ -139,19 +139,24 @@ class DockerSandbox(BaseSandbox):
                 timed_out=False
             )
 
-    async def read_file(self, relative_path: str) -> str:
-        # Files are mounted locally, so read from mounted root_path safely
+    def _resolve_safe_path(self, relative_path: str) -> Path:
         clean_rel = relative_path.lstrip("/\\")
         target = (self.root_path / clean_rel).resolve()
-        target.relative_to(self.root_path)
+        try:
+            target.relative_to(self.root_path)
+        except ValueError:
+            raise PermissionError(f"Path traversal blocked: {relative_path}")
+        return target
+
+    async def read_file(self, relative_path: str) -> str:
+        # Files are mounted locally, so read from mounted root_path safely
+        target = self._resolve_safe_path(relative_path)
         if not target.exists():
             raise FileNotFoundError(f"File not found: {relative_path}")
         return target.read_text(encoding="utf-8", errors="replace")
 
     async def write_file(self, relative_path: str, content: str) -> None:
-        clean_rel = relative_path.lstrip("/\\")
-        target = (self.root_path / clean_rel).resolve()
-        target.relative_to(self.root_path)
+        target = self._resolve_safe_path(relative_path)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content, encoding="utf-8")
 

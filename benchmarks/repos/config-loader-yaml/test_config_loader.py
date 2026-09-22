@@ -1,6 +1,4 @@
-import os
-import pytest
-from config_loader import ConfigLoader, AppConfig
+from config_loader import ConfigLoader
 
 
 def test_default_values():

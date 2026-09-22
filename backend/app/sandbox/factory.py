@@ -1,4 +1,3 @@
-import os
 from typing import Optional
 from app.config.settings import get_settings
 from app.sandbox.base import BaseSandbox

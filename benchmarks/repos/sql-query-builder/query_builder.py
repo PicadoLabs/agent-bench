@@ -1,5 +1,5 @@
 # query_builder.py - Safe Parameterized SQL Query Builder
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Any, Tuple, Optional
 
 
 class QueryBuilder:

@@ -1,4 +1,3 @@
-import pytest
 from app.failure_analysis.analyzer import FailureAnalyzer
 
 

@@ -2,7 +2,6 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.storage.models import Base
-from app.storage.database import init_db
 from app.benchmarks.loader import BenchmarkLoader
 from app.benchmarks.runner import BenchmarkRunner
 from app.providers.mock_provider import MockProvider

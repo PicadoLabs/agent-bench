@@ -4,7 +4,7 @@ import time
 import asyncio
 import subprocess
 from pathlib import Path
-from typing import Dict, Any, Optional, List
+from typing import Dict, Optional, List
 from app.sandbox.base import BaseSandbox, CommandResult
 
 
@@ -75,9 +75,11 @@ class LocalSandbox(BaseSandbox):
         
         # Clean environment: preserve system runtime environment but strip secrets/API keys
         safe_env = dict(os.environ)
-        # Strip sensitive API keys so they never leak to sandbox agents
-        for key in ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY", "CUSTOM_API_KEY"]:
-            safe_env.pop(key, None)
+        # Strip sensitive API keys so they never leak to sandbox agents (case-insensitive for Windows)
+        sensitive_keys = {"OPENAI_API_KEY", "ANTHROPIC_API_KEY", "GEMINI_API_KEY", "CUSTOM_API_KEY"}
+        keys_to_remove = [k for k in safe_env.keys() if k.upper() in sensitive_keys]
+        for k in keys_to_remove:
+            safe_env.pop(k, None)
 
         safe_env["PYTHONPATH"] = str(self.root_path)
         safe_env["PYTHONUNBUFFERED"] = "1"

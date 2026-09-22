@@ -1,4 +1,3 @@
-import os
 import shutil
 import time
 import datetime
@@ -7,7 +6,6 @@ from typing import Dict, Any, Optional, Callable, Awaitable
 from sqlalchemy.orm import Session
 
 from app.config.settings import get_settings
-from app.benchmarks.schema import BenchmarkTaskYAML
 from app.benchmarks.loader import BenchmarkLoader
 from app.providers.factory import get_provider
 from app.sandbox.factory import get_sandbox
@@ -74,7 +72,7 @@ class BenchmarkRunner:
         actual_provider = provider_name or self.settings.model_provider
 
         # 2. Register run in DB (State: PREPARING)
-        run_record = self.run_repo.create_run(
+        self.run_repo.create_run(
             run_id=actual_run_id,
             benchmark_id=benchmark_id,
             benchmark_name=benchmark_db.name,

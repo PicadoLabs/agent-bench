@@ -1,6 +1,6 @@
 from typing import List, Optional, Dict, Any
 from sqlalchemy.orm import Session
-from sqlalchemy import desc, func
+from sqlalchemy import desc
 import datetime
 from app.storage.models import (
     BenchmarkModel,
@@ -10,9 +10,7 @@ from app.storage.models import (
     ExecutionEventModel,
     TestResultModel,
     ScoreModel,
-    FailureAnalysisModel,
-    AgentRegistryModel,
-    ModelRegistryModel
+    FailureAnalysisModel
 )
 
 

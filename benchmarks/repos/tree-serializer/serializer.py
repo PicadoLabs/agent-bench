@@ -18,7 +18,6 @@ class TreeSerializer:
         - Must detect circular references (cycles) and raise ValueError("Cycle detected in tree")
         - Must maintain breadth-first or depth-first unique visitation without duplicates.
         """
-        visited: Set[str] = set()
         result: List[Dict[str, Any]] = []
 
         def traverse(node: TreeNode, path: Set[str]):

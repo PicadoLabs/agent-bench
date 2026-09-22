@@ -1,7 +1,6 @@
 # config_loader.py - Typed Configuration Loader with Env Overrides
 import os
-import yaml
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 
 class AppConfig:

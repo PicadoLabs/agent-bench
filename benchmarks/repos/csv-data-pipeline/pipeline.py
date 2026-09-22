@@ -1,5 +1,5 @@
 # pipeline.py - CSV Data Processing Pipeline
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 import datetime
 
 

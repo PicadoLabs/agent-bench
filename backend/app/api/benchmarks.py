@@ -1,11 +1,10 @@
 import os
-from typing import List, Dict, Any, Optional
+from typing import Dict, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.storage.database import get_db
-from app.storage.models import BenchmarkModel, TaskModel
 from app.storage.repository import BenchmarkRepository
 from app.benchmarks.loader import BenchmarkLoader
 from app.config.settings import get_settings

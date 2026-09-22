@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, List, Optional, Callable, Awaitable
-from pydantic import BaseModel, Field
+from typing import Dict, Any, Optional, Callable, Awaitable
+from pydantic import BaseModel
 from app.providers.base import BaseModelProvider
 from app.sandbox.base import BaseSandbox
 

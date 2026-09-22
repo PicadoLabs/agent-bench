@@ -1,5 +1,4 @@
-import os
-from typing import Optional, Dict, Any
+from typing import Optional, Dict
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field
 

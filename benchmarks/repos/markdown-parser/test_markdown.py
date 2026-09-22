@@ -1,4 +1,3 @@
-import pytest
 from markdown_parser import MarkdownLinkExtractor
 
 

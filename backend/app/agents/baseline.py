@@ -1,4 +1,3 @@
-import json
 from typing import Dict, Any, Optional
 from app.agents.base import BaseAgent, AgentRunResult, EventCallback
 from app.agents.tools import ToolRegistry
@@ -24,7 +23,7 @@ class BaselineAgent(BaseAgent):
             if on_event:
                 await on_event(event_type, msg, details or {})
 
-        await emit("agent_started", f"Starting BaselineAgent on task", {"model": self.provider.model_name})
+        await emit("agent_started", "Starting BaselineAgent on task", {"model": self.provider.model_name})
 
         # List files
         files = await sandbox.list_files(".")

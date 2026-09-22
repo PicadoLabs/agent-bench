@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any, Optional
 from app.agents.base import BaseAgent, AgentRunResult, EventCallback
-from app.agents.tools import ToolRegistry, ToolExecutionResult
+from app.agents.tools import ToolRegistry
 from app.providers.base import LLMMessage
 from app.sandbox.base import BaseSandbox
 
@@ -28,7 +28,7 @@ class FastPatchAgent(BaseAgent):
             if on_event:
                 await on_event(event_type, msg, details or {})
 
-        await emit("agent_started", f"Starting FastPatchAgent on task", {"model": self.provider.model_name})
+        await emit("agent_started", "Starting FastPatchAgent on task", {"model": self.provider.model_name})
 
         files = await sandbox.list_files(".")
         await emit("tool_call", "Listing repository files", {"files": files})

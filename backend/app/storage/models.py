@@ -1,5 +1,4 @@
 import datetime
-from typing import Optional, List, Dict, Any
 from sqlalchemy import (
     Column,
     String,
@@ -9,8 +8,7 @@ from sqlalchemy import (
     DateTime,
     Text,
     ForeignKey,
-    JSON,
-    Enum as SqlEnum
+    JSON
 )
 from sqlalchemy.orm import declarative_base, relationship
 

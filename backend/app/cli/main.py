@@ -1,14 +1,11 @@
 import os
 import sys
 import asyncio
-from pathlib import Path
 from typing import Optional, List
 import typer
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
-from rich.text import Text
-from rich import print as rprint
 
 from app.config.settings import get_settings
 from app.storage.database import init_db, SessionLocal

@@ -1,5 +1,5 @@
 # pagination.py - In-memory pagination helper for REST APIs
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from pydantic import BaseModel
 
 

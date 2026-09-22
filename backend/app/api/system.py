@@ -1,15 +1,14 @@
 import sys
-import os
 import httpx
-from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.storage.database import get_db
 from app.storage.models import AgentRegistryModel, ModelRegistryModel, RunModel
 from app.storage.repository import RunRepository
-from app.config.settings import get_settings, PROVIDER_PRICING
+from app.config.settings import get_settings
 from app.sandbox.factory import is_docker_available
 
 router = APIRouter(prefix="/api", tags=["system"])

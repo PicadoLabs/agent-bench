@@ -1,5 +1,3 @@
-import pytest
-import time
 from auth_service import AuthService
 
 
