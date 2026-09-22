@@ -9,6 +9,16 @@
 
 ---
 
+
+## The Real-World Problem
+As AI coding agents become more autonomous, developers and researchers struggle to measure their actual capabilities objectively. Testing agents is often ad-hoc, tied to specific LLM providers, or requires heavy, complex environments (like running thousands of Docker containers). Teams need a way to answer: *"Is this new agent prompt or model actually better at fixing bugs than the old one?"*
+
+## Why it's Unique (The "Edge")
+- **Instant GitHub PR Ingestion:** The killer feature. Users can turn *any* public GitHub PR into a reproducible benchmark task with a single CLI command.
+- **Provider & Framework Agnostic:** Tests the *agent's* ability to solve the problem, regardless of whether it uses Ollama, OpenAI, or a custom local model.
+- **Beautiful Telemetry & UI:** Unlike CLI-only tools, Agent Bench includes a React-based Web UI for visual telemetry, leaderboards, and failure taxonomy.
+- **Local Sandbox Flexibility:** Supports both `LocalProcessSandbox` for speed and `DockerSandbox` for isolation.
+
 ## Overview
 
 Traditional LLM evaluation benchmarks (e.g. HumanEval, MBPP) measure single-turn string generation (`pass@1`) on isolated toy functions. In contrast, real software engineering requires autonomous agents to:
