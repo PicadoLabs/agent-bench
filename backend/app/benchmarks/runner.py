@@ -1,6 +1,6 @@
 import shutil
 import time
-import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, Optional, Callable, Awaitable
 from sqlalchemy.orm import Session
@@ -332,7 +332,7 @@ class BenchmarkRunner:
         self.run_repo.update_run_status(
             actual_run_id,
             status=final_status,
-            end_time=datetime.datetime.utcnow(),
+            end_time=datetime.now(timezone.utc),
             duration_seconds=round(total_duration, 2),
             total_score=score_res.overall_score,
             test_pass_rate=metrics.test_pass_rate,
