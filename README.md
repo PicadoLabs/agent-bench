@@ -346,6 +346,17 @@ Agent-Bench/
 └── LICENSE                   # Apache License 2.0
 ```
 
+### Global Command Palette
+
+The web dashboard includes a global command palette for fast keyboard-driven navigation:
+
+- Press `Ctrl+K` on Windows/Linux or `Cmd+K` on macOS.
+- Search commands and routes with exact or fuzzy matching.
+- Use `↑` / `↓` to navigate and `Enter` to execute.
+- Press `Esc` to close the palette.
+- The header exposes the same command search entry point for mouse users.
+
+The command registry is centralized in `frontend/src/components/CommandPalette.tsx`, so new dashboard actions can be added without changing the routing architecture.
 ---
 
 ## PicadoLabs
