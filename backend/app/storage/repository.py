@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
-import datetime
+from datetime import datetime, timezone
 from app.storage.models import (
     BenchmarkModel,
     TaskModel,
@@ -69,7 +69,7 @@ class RunRepository:
             model_name=model_name,
             provider_name=provider_name,
             status="QUEUED",
-            start_time=datetime.datetime.utcnow(),
+            start_time=datetime.now(timezone.utc),
             config_snapshot=config_snapshot or {}
         )
         self.db.add(run)
@@ -108,7 +108,7 @@ class RunRepository:
             step_number=step_number,
             message=message,
             details=details or {},
-            timestamp=datetime.datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
         self.db.add(event)
         self.db.commit()
@@ -123,7 +123,7 @@ class RunRepository:
             output_data=output_data,
             duration_seconds=duration_seconds,
             error=error,
-            timestamp=datetime.datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
         self.db.add(tool_call)
         self.db.commit()
@@ -143,7 +143,7 @@ class RunRepository:
             stdout=stdout,
             stderr=stderr,
             test_details=details or {},
-            timestamp=datetime.datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
         self.db.add(result)
         self.db.commit()
@@ -160,7 +160,7 @@ class RunRepository:
             overall_score=overall_score,
             breakdown=breakdown,
             ai_judge_evaluation=ai_judge,
-            timestamp=datetime.datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
         self.db.add(score)
         self.db.commit()
@@ -175,7 +175,7 @@ class RunRepository:
             attempts_count=attempts,
             resolution_hints=resolution_hints,
             details=details or {},
-            timestamp=datetime.datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
         self.db.add(analysis)
         self.db.commit()
