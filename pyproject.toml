@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "agentbench"
+name = "agent-bench"
 version = "1.0.0"
 description = "Provider-agnostic evaluation and benchmarking platform for autonomous AI coding agents"
 readme = "README.md"
@@ -69,6 +69,9 @@ dev = [
     "ruff>=0.3.0",
     "mypy>=1.9.0"
 ]
+
+[project.scripts]
+agentbench = "app.cli.main:main"
 
 [project.urls]
 Homepage = "https://picadolabs.me"
