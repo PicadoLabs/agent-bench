@@ -1,6 +1,7 @@
 # AgentBench
 
-[![PyPI Version](https://img.shields.io/pypi/v/agentbench-core.svg)](https://pypi.org/project/agentbench-core/)
+[![PyPI Version](https://img.shields.io/pypi/v/agentbench-core.svg?color=blue)](https://pypi.org/project/agentbench-core/)
+[![PyPI Total Downloads](https://img.shields.io/pepy/dt/agentbench-core?color=blue&label=downloads)](https://pypi.org/project/agentbench-core/)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-green)](https://nodejs.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
