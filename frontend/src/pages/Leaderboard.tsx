@@ -4,7 +4,9 @@ import { LeaderboardEntry } from '../types';
 import { formatTime, formatScore, formatCost } from '../lib/utils';
 import {
   Trophy,
-  Search
+  Search,
+  Download,
+  FileJson
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -50,6 +52,55 @@ export const Leaderboard: React.FC = () => {
     return true;
   });
 
+  const downloadFile = (content: string, filename: string, type: string) => {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const exportCSV = () => {
+    const escape = (value: string | number) => `"${String(value).replace(/"/g, '""')}"`;
+    const headers = [
+      'Rank',
+      'Agent Name',
+      'Model',
+      'Provider',
+      'Total Runs',
+      'Success Rate (%)',
+      'Avg Score',
+    ];
+    const rows = filtered.map((entry) => [
+      entry.rank,
+      entry.agent_name,
+      entry.model_name,
+      entry.provider_name,
+      entry.total_runs,
+      entry.success_rate,
+      entry.avg_score,
+    ]);
+    const csv = [headers, ...rows].map((row) => row.map(escape).join(',')).join('\n');
+    downloadFile(csv, 'agentbench-leaderboard.csv', 'text/csv;charset=utf-8;');
+  };
+
+  const exportJSON = () => {
+    const data = filtered.map((entry) => ({
+      rank: entry.rank,
+      agent_name: entry.agent_name,
+      model_name: entry.model_name,
+      provider_name: entry.provider_name,
+      total_runs: entry.total_runs,
+      success_rate: entry.success_rate,
+      avg_score: entry.avg_score,
+    }));
+    downloadFile(JSON.stringify(data, null, 2), 'agentbench-leaderboard.json', 'application/json');
+  };
+
   const getRankBadge = (rank: number) => {
     const formatted = rank < 10 ? `0${rank}` : `${rank}`;
     if (rank === 1) {
@@ -87,6 +138,24 @@ export const Leaderboard: React.FC = () => {
 
         {/* Filter Controls */}
         <div className="flex flex-wrap items-center gap-3">
+          <div className="flex rounded-lg bg-surface border border-border p-1 text-xs font-mono">
+            <button
+              onClick={exportCSV}
+              disabled={filtered.length === 0}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md font-bold text-primary-secondary hover:text-primary-text transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Download size={14} />
+              Export CSV
+            </button>
+            <button
+              onClick={exportJSON}
+              disabled={filtered.length === 0}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md font-bold text-primary-secondary hover:text-primary-text transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FileJson size={14} />
+              Export JSON
+            </button>
+          </div>
           <div className="flex rounded-lg bg-surface border border-border p-1 text-xs font-mono">
             <button
               onClick={() => setFilterType('all')}
